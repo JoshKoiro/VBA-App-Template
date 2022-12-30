@@ -55,6 +55,23 @@ End Property
    ' m_controls.Add control, control.name
 'End Property
 
+'Private function to remove white spaces in a string - acquired from https://stackoverflow.com/questions/42306358/removing-all-spaces-in-string
+Private Function RemoveWhiteSpace(textString As String) As String
+    With New RegExp
+        .Pattern = "\s"
+        .MultiLine = True
+        .Global = True
+        RemoveWhiteSpace = .Replace(textString, vbNullString)
+    End With
+End Function
+
+'Private helper function to change text string to be acceptable for a vba object name (proper case with no spaces) - https://www.automateexcel.com/vba/upper-lower-proper-case-functions/
+Private Function formatName(text As String) As String
+
+    formatName = RemoveWhiteSpace(StrConv(text, vbProperCase))
+
+End Function
+
 'This constructs the UserForm object based on the properties defined
 Public Sub build()
 
@@ -72,9 +89,11 @@ Set frm = ActiveWorkbook.VBProject.VBComponents.Add(vbext_ct_MSForm)
 
 'Set the properties of the form
 With frm
-    .Caption = m_formName
-    .width = m_formWidth
-    .height = m_formHeight
+    .Properties("Caption") = m_formName
+    .Properties("Width") = m_formWidth
+    .Properties("Height") = m_formHeight
 End With
+
+frm.Activate
 
 End Sub
