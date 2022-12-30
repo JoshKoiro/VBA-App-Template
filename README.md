@@ -17,11 +17,19 @@ If changes are made to the ManageCode.bas file inside Excel Application Template
 
 The first set of classes are associated with creating a form programatically. This is done by constructing a FormGen class and then using the FormGen.build() method to constuct a pre-defined, formatted UserForm object.
 
-The GenForm class can either be constructed through property definition, or though the import of data from a .csv file using the FormGen.import() method.
+The GenForm class can either be constructed through property definition, or though the import of data from a .csv file using the FormGen.import() method. The later will be the more efficient
 
-### UserInput Class
+### FormTheme
 
-The UserInput Class is a class that defines the Form components that make up the FormGen Class items collection. Instances of this class represent UserForm input components that are configured through the class properties.
+There is also an additional class called a FormTheme which works in tandem with the FormGen class to be able to quickly create UserForms either during development or programatically on the fly. This class captures visual data of both forms and components within forms. The form is applied by using the FormTheme.apply() method and passing in the UserForm as an argument:
+```FormTheme.apply(UserFormName)```
 
-This class extends the UserForm Component object.
+The FormTheme class creates an object that defines all of the default values for UserForms and the UserForm components that can be placed on the form. Of course any of these values can be overriden by accessing the component or form directly.
 
+It is yet to be determined where the cutoff between properties defined in the FormGen class and the FormTheme class land. The idea of the FormTheme class is to capture properties that have to do with the visual asthetic, while the FormGen class deals with constructing the form but also deals with spacing and broad layout concepts. (i.e. spacing and sizing)
+
+Of course, these things will probably be able to be over-riden in the FormTheme class, as the FormTheme.apply() method will mutate the existing property data of the UserForm. But good modular design will dictate that there be a preferred cutoff of responsibility.
+
+## Importing and Exporting build "blueprints"
+
+Another reason for the separation of these two classes and what they handle is that you are able to mix and match form design "blueprints". These will be some kind of formatted text file, like a .csv or a tab deliminated file that defines the structure, style and other properties of the form. Methods will need to be built to both import and export this information.
