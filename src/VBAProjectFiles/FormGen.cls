@@ -10,49 +10,49 @@ Attribute VB_Exposed = False
 'Class Module FormGen
 Option Explicit
 'Member Variables
-Private m_formName As String
-Private m_formWidth As Integer
-Private m_formHeight As Integer
-Private m_controls As Collection
+Private pFormName As String
+Private pFormWidth As Integer
+Private pFormHeight As Integer
+Private pControls As Collection
 'This is the "constructor class"
 Private Sub Class_Initialize()
 
-    m_formName = ""
-    m_formWidth = 300
-    m_formHeight = 200
+    pFormName = ""
+    pFormWidth = 300
+    pFormHeight = 200
 
 End Sub
-'Getter for m_formName variable
+'Getter for pFormName variable
 Property Get formName() As String
-    formName = m_formName
+    formName = pFormName
 End Property
-'Letter for m_formName variable
+'Letter for pFormName variable
 Property Let formName(name As String)
-    m_formName = name
+    pFormName = name
 End Property
-'Getter for the m_formWidth variable
+'Getter for the pFormWidth variable
 Property Get formWidth() As Integer
-    formWidth = m_formWidth
+    formWidth = pFormWidth
 End Property
-'Letter for the m_formWidth variable
+'Letter for the pFormWidth variable
 Property Let formWidth(width As Integer)
-    m_formWidth = width
+    pFormWidth = width
 End Property
-'Getter for the m_formHeight variable
+'Getter for the pFormHeight variable
 Property Get formHeight() As Integer
-    formHeight = m_formHeight
+    formHeight = pFormHeight
 End Property
-'Letter for the m_formHeight variable
+'Letter for the pFormHeight variable
 Property Let formHeight(height As Integer)
-    m_formHeight = height
+    pFormHeight = height
 End Property
-'Getter for m_controls collection variable
+'Getter for pControls collection variable
 'Property Get controls() As Collection
-    'Set controls = m_controls
+    'Set controls = pControls
 'End Property
-'Letter for m_controls variable collection
+'Letter for pControls variable collection
 'Property Let controls(control As control)
-   ' m_controls.Add control, control.name
+   ' pControls.Add control, control.name
 'End Property
 
 'Private function to remove white spaces in a string - acquired from https://stackoverflow.com/questions/42306358/removing-all-spaces-in-string
@@ -77,8 +77,8 @@ Public Sub build()
 
 'verify that the proper information is entered into the class properties
 
-'check m_formName
-If m_formName = "" Then
+'check pFormName
+If pFormName = "" Then
     MsgBox "Please provide a name for the userForm", vbCritical
     Exit Sub
 End If
@@ -89,9 +89,10 @@ Set frm = ActiveWorkbook.VBProject.VBComponents.Add(vbext_ct_MSForm)
 
 'Set the properties of the form
 With frm
-    .Properties("Caption") = m_formName
-    .Properties("Width") = m_formWidth
-    .Properties("Height") = m_formHeight
+    .name = formatName(pFormName)
+    .Properties("Caption") = pFormName
+    .Properties("Width") = pFormWidth
+    .Properties("Height") = pFormHeight
 End With
 
 frm.Activate
