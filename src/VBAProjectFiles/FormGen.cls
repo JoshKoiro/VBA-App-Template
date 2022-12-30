@@ -95,7 +95,7 @@ Next existingFrm
 
 'define the form
 Dim frm As VBComponent
-Set frm = ActiveWorkbook.VBProject.VBComponents.Add(vbext_ct_MSForm)
+Set frm = ThisWorkbook.VBProject.VBComponents.Add(vbext_ct_MSForm)
 
 'Set the properties of the form
 With frm
