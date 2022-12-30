@@ -8,7 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 'Class Module FormGen
-
+Option Explicit
 'Member Variables
 Private m_formName As String
 Private m_formWidth As Integer
@@ -47,13 +47,13 @@ Property Let formHeight(height As Integer)
     m_formHeight = height
 End Property
 'Getter for m_controls collection variable
-Property Get controls() As Collection
-    Set controls = m_controls
-End Property
+'Property Get controls() As Collection
+    'Set controls = m_controls
+'End Property
 'Letter for m_controls variable collection
-Property Let controls(control As control)
-    m_controls.Add control, control.name
-End Property
+'Property Let controls(control As control)
+   ' m_controls.Add control, control.name
+'End Property
 
 'This constructs the UserForm object based on the properties defined
 Public Sub build()
@@ -63,11 +63,12 @@ Public Sub build()
 'check m_formName
 If m_formName = "" Then
     MsgBox "Please provide a name for the userForm", vbCritical
+    Exit Sub
 End If
 
 'define the form
-Dim frm As UserForm
-Set frm = New UserForm
+Dim frm As VBComponent
+Set frm = ActiveWorkbook.VBProject.VBComponents.Add(vbext_ct_MSForm)
 
 'Set the properties of the form
 With frm
