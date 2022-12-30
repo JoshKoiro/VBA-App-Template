@@ -77,11 +77,21 @@ Public Sub build()
 
 'verify that the proper information is entered into the class properties
 
-'check pFormName
-If pFormName = "" Then
-    MsgBox "Please provide a name for the userForm", vbCritical
-    Exit Sub
-End If
+'check if the form name already exists
+Dim existingFrm As Object
+
+For Each existingFrm In ThisWorkbook.VBProject.VBComponents
+
+    'item is a userForm
+    If existingFrm.Type = vbext_ct_MSForm Then
+    
+    If formatName(pFormName) = existingFrm.name Then
+        MsgBox "Please provide a unique name for the userform. " & existingFrm.name & " has already been taken.", vbCritical
+        Exit Sub
+    End If
+    End If
+
+Next existingFrm
 
 'define the form
 Dim frm As VBComponent
